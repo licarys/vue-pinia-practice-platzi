@@ -3,18 +3,18 @@ import { ref, reactive, computed, watch } from 'vue'
 import { useRoute } from 'vue-router'
 import MessageItem from '@/components/MessageItem.vue'
 import useMessagesStore from '@/stores/messages.js'
-
+import useContactsStore from '@/stores/contacts.js'
 
 const route = useRoute()
 const messagesStore = useMessagesStore()
+const contactStore = useContactsStore()
 
 const end = ref(null)
 const channelId = ref(null)
 const title = ref('')
-const people = reactive([
-])
+
 const messagesView = computed(() => messagesStore.findMessagesByChannelId(channelId.value).map((message) => {
-  const author = people.find((p) => p.id === message.author)
+  const author = contactStore.getContactById(message.author)
   if (!author) return message;
     return {
     ...message,
@@ -48,7 +48,7 @@ scrollToBottom()
       <div class="people-list">
         <div
           class="people-item"
-          v-for="p in people"
+          v-for="p in contactStore.contacts"
           :key="p.id"
         >
           <img :src="p.avatar" :alt="p.name" />
