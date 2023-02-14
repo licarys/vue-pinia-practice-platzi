@@ -4,7 +4,7 @@ export default defineStore('profile', {
   state: () => ({
     id: 1,
     username: 'lili.code1',
-    status: 'active',
+    status: null,
     avatar: '/avatars/avatar.jpg',
   })
 })
